@@ -370,24 +370,6 @@ const API_METHOD = 'POST';
       }
     }
 
-        const contentType = res.headers.get('content-type') || '';
-        let responseData;
-        if (contentType.includes('application/json')) {
-          responseData = await res.json();
-        } else {
-          responseData = await res.text();
-        }
-
-        if (!res.ok) {
-          throw new Error(typeof responseData === 'string' ? responseData : JSON.stringify(responseData));
-        }
-
-        showStatus('ok', `Entidad enviada correctamente. Respuesta: ${typeof responseData === 'string' ? responseData : JSON.stringify(responseData)}`);
-      } catch (error) {
-        showStatus('error', `Error al guardar: ${error.message}`);
-      }
-    }
-
     function resetForm() {
       form.reset();
       aliasesList.innerHTML = '';
