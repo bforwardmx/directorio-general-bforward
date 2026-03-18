@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Directorio General BForward</title>
+    <link rel="stylesheet" href="./styles.css" />
+
+</head>
+<body>
+  <div class="page-shell">
+    <section class="masthead">
+      <div class="masthead-banner"></div>
+      <div class="masthead-panel">
+        <div class="masthead-top">
+          <div class="brand-lockup">
+            <div class="brand-logo" aria-label="BForward"></div>
+            <span class="eyebrow">Directorio Maestro · Partner Master</span>
+            <h1>Directorio General BForward</h1>
+            <p>
+              Captura y administración de entidades, contactos, roles y direcciones del directorio general.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="statusBox" class="status-box"></div>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+  <div class="card">
+    <div class="card-header">
+      <h3>Guía rápida</h3>
+      <p>Complete la información principal y agregue los datos complementarios que apliquen.</p>
+    </div>
+    <div class="card-body">
+      <div class="mini-list">
+        <div class="mini-item">
+          <span>Entidad</span>
+          <strong>Datos fiscales y operativos de la empresa.</strong>
+        </div>
+        <div class="mini-item">
+          <span>Contactos</span>
+          <strong>Personas clave para operaciones, facturación y seguimiento.</strong>
+        </div>
+        <div class="mini-item">
+          <span>Direcciones</span>
+          <strong>Fiscal, oficina, almacén, entrega u otras ubicaciones.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+      <main>
+        <form id="directorioForm" class="form-stack">
+          <div class="card">
+            <div class="card-header">
+              <h2>Entidad</h2>
+              <p>Datos principales del registro maestro.</p>
+            </div>
+            <div class="card-body">
+              <div class="grid">
+                <div class="col-3">
+                  <label for="id">ID (edición opcional)</label>
+                  <input id="id" name="id" type="text" placeholder="UUID si se va a editar" />
+                </div>
+                <div class="col-3">
+                  <label for="codigo_interno">Código interno</label>
+                  <input id="codigo_interno" name="codigo_interno" type="text" placeholder="CLI-0001 / VEN-0002" />
+                </div>
+                <div class="col-3">
+                  <label for="estatus">Estatus</label>
+                  <select id="estatus" name="estatus">
+                    <option value="prospecto" selected>Prospecto</option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                    <option value="bloqueado">Bloqueado</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <label for="origen">Origen</label>
+                  <select id="origen" name="origen">
+                    <option value="manual" selected>Manual</option>
+                    <option value="importado">Importado</option>
+                    <option value="api">API</option>
+                    <option value="n8n">n8n</option>
+                  </select>
+                </div>
+
+                <div class="col-6">
+                  <label for="nombre_comercial">Nombre comercial</label>
+                  <input id="nombre_comercial" name="nombre_comercial" type="text" required placeholder="Nombre visible / operativo" />
+                </div>
+                <div class="col-6">
+                  <label for="razon_social">Razón social</label>
+                  <input id="razon_social" name="razon_social" type="text" placeholder="Nombre legal / fiscal" />
+                </div>
+
+                <div class="col-3">
+                  <label for="rfc">RFC</label>
+                  <input id="rfc" name="rfc" type="text" maxlength="13" placeholder="ABC010203XYZ" />
+                </div>
+                <div class="col-3">
+                  <label for="tax_id_extranjero">Tax ID extranjero</label>
+                  <input id="tax_id_extranjero" name="tax_id_extranjero" type="text" placeholder="Si aplica" />
+                </div>
+                <div class="col-3">
+                  <label for="regimen_fiscal_id">Régimen fiscal</label>
+                  <input id="regimen_fiscal_id" name="regimen_fiscal_id" type="text" maxlength="5" placeholder="601" />
+                </div>
+                <div class="col-3">
+                  <label for="tipo_persona">Tipo persona</label>
+                  <select id="tipo_persona" name="tipo_persona">
+                    <option value="">Seleccionar</option>
+                    <option value="moral">Moral</option>
+                    <option value="fisica">Física</option>
+                    <option value="extranjero">Extranjero</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+
+                <div class="col-12">
+                  <label>Habilitaciones</label>
+                  <div class="check-grid">
+                    <label class="check-pill"><input type="checkbox" id="habilitado_operaciones" checked /> <span>Habilitado operaciones</span></label>
+                    <label class="check-pill"><input type="checkbox" id="habilitado_facturacion" checked /> <span>Habilitado facturación</span></label>
+                    <label class="check-pill"><input type="checkbox" id="habilitado_pagos" checked /> <span>Habilitado pagos</span></label>
+                    <label class="check-pill"><input type="checkbox" id="activo" checked /> <span>Registro activo</span></label>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="bloqueado_motivo">Motivo de bloqueo</label>
+                  <input id="bloqueado_motivo" name="bloqueado_motivo" type="text" placeholder="Solo si el estatus es bloqueado" />
+                </div>
+
+                <div class="col-12">
+                  <label for="notas">Notas</label>
+                  <textarea id="notas" name="notas" placeholder="Observaciones generales, condiciones especiales, validaciones, etc."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Roles logísticos y comerciales</h2>
+              <p>Una misma entidad puede tener varios roles.</p>
+            </div>
+            <div class="card-body">
+              <div class="check-grid" id="rolesGrid">
+                <label class="check-pill"><input type="checkbox" value="customer" /> <span>Customer</span></label>
+                <label class="check-pill"><input type="checkbox" value="agent" /> <span>Agent</span></label>
+                <label class="check-pill"><input type="checkbox" value="shipping_agent" /> <span>Shipping Agent</span></label>
+                <label class="check-pill"><input type="checkbox" value="shipping_line" /> <span>Shipping Line</span></label>
+                <label class="check-pill"><input type="checkbox" value="trucker" /> <span>Trucker</span></label>
+                <label class="check-pill"><input type="checkbox" value="warehouse" /> <span>Warehouse</span></label>
+                <label class="check-pill"><input type="checkbox" value="vendor" /> <span>Vendor</span></label>
+                <label class="check-pill"><input type="checkbox" value="shipper" /> <span>Shipper</span></label>
+                <label class="check-pill"><input type="checkbox" value="consignee" /> <span>Consignee</span></label>
+                <label class="check-pill"><input type="checkbox" value="customs_broker" /> <span>Customs Broker</span></label>
+                <label class="check-pill"><input type="checkbox" value="notify_party" /> <span>Notify Party</span></label>
+                <label class="check-pill"><input type="checkbox" value="terminal" /> <span>Terminal</span></label>
+                <label class="check-pill"><input type="checkbox" value="port_operator" /> <span>Port Operator</span></label>
+                <label class="check-pill"><input type="checkbox" value="insurance" /> <span>Insurance</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Aliases / nombres alternos</h2>
+              <p>Útil para BL Name, Billing Name, nombre documental u otras variantes del partner.</p>
+            </div>
+            <div class="card-body">
+              <div class="section-actions">
+                <div class="muted">Puedes capturar varios nombres alternos.</div>
+                <button type="button" class="btn btn-secondary" id="btnAddAlias">Agregar alias</button>
+              </div>
+              <div id="aliasesList" class="repeat-list"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Contactos</h2>
+              <p>Captura contactos operativos, de facturación o principales.</p>
+            </div>
+            <div class="card-body">
+              <div class="section-actions">
+                <div class="muted">Puedes capturar tantos contactos como requieras.</div>
+                <button type="button" class="btn btn-secondary" id="btnAddContacto">Agregar contacto</button>
+              </div>
+              <div id="contactosList" class="repeat-list"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Direcciones</h2>
+              <p>Separadas por tipo: fiscal, billing, almacén, patio, entrega, oficina, etc.</p>
+            </div>
+            <div class="card-body">
+              <div class="section-actions">
+                <div class="muted">Puedes capturar varias direcciones por entidad.</div>
+                <button type="button" class="btn btn-secondary" id="btnAddDireccion">Agregar dirección</button>
+              </div>
+              <div id="direccionesList" class="repeat-list"></div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <button type="button" class="btn btn-secondary" id="btnReset">Limpiar formulario</button>
+            <button type="submit" class="btn btn-success">Guardar entidad</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+    <script src="./app.js"></script>
+
+  <script src="./app.js"></script>
+</body>
+</html>
