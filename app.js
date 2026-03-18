@@ -318,39 +318,55 @@ const API_METHOD = 'POST';
       return payload;
     }
 
-    async function submitPayload(payload) {
+            async function submitPayload(payload) {
       const endpoint = 'https://n8n.bforward.cloud/webhook/0fff060f-8102-4a78-b520-53f212e354da';
-      const method = 'POST';
     
-      if (!payload.entidad.nombre_comercial) {
+      if (!payload?.entidad?.nombre_comercial) {
         showStatus('error', 'El campo Nombre comercial es obligatorio.');
         return;
       }
+    
+      console.log('ANTES DE FETCH');
+      console.log('Endpoint:', endpoint);
+      console.log('Payload:', payload);
     
       try {
         showStatus('warn', 'Enviando información...');
     
         const res = await fetch(endpoint, {
-          method,
+          method: 'POST',
+          mode: 'cors',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(payload)
         });
     
-        const data = await res.json();
+        console.log('DESPUÉS DE FETCH');
+        console.log('Status HTTP:', res.status);
+        console.log('OK:', res.ok);
+    
+        const text = await res.text();
+        console.log('Respuesta raw:', text);
+    
+        let data = {};
+        try {
+          data = text ? JSON.parse(text) : {};
+        } catch {
+          data = { raw: text };
+        }
     
         if (!res.ok) {
-          showStatus('error', data.message || 'Ocurrió un error al guardar.');
+          showStatus('error', data.message || `Error HTTP ${res.status}`);
           return;
         }
     
         showStatus('success', data.message || 'Información guardada correctamente.');
-        console.log('Respuesta del webhook:', data);
+        console.log('Respuesta final:', data);
     
       } catch (error) {
-        console.error(error);
-        showStatus('error', 'No fue posible conectar con el webhook.');
+        console.error('ERROR FETCH:', error);
+        showStatus('error', 'No fue posible conectar con n8n. Revisa consola del navegador.');
       }
     }
 
