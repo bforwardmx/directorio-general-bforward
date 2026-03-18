@@ -318,29 +318,41 @@ const API_METHOD = 'POST';
       return payload;
     }
 
-        async function submitPayload(payload) {
-          const endpoint = document.getElementById('endpointUrl').value.trim();
-          const method = document.getElementById('httpMethod').value;
-        
-          if (!payload.entidad.nombre_comercial) {
-            showStatus('error', 'El campo Nombre comercial es obligatorio.');
-            return;
-          }
-        
-          if (!endpoint) {
-            showStatus('warn', 'No se configuró endpoint. El JSON ya quedó generado para prueba.');
-            return;
-          }
-        
-          try {
-            showStatus('warn', 'Enviando información...');
-            const res = await fetch(endpoint, {
-              method,
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(payload)
-            });
+    async function submitPayload(payload) {
+      const endpoint = 'https://n8n.bforward.cloud/webhook/0fff060f-8102-4a78-b520-53f212e354da';
+      const method = 'POST';
+    
+      if (!payload.entidad.nombre_comercial) {
+        showStatus('error', 'El campo Nombre comercial es obligatorio.');
+        return;
+      }
+    
+      try {
+        showStatus('warn', 'Enviando información...');
+    
+        const res = await fetch(endpoint, {
+          method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+    
+        const data = await res.json();
+    
+        if (!res.ok) {
+          showStatus('error', data.message || 'Ocurrió un error al guardar.');
+          return;
+        }
+    
+        showStatus('success', data.message || 'Información guardada correctamente.');
+        console.log('Respuesta del webhook:', data);
+    
+      } catch (error) {
+        console.error(error);
+        showStatus('error', 'No fue posible conectar con el webhook.');
+      }
+    }
 
         const contentType = res.headers.get('content-type') || '';
         let responseData;
