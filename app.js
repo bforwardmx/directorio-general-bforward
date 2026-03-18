@@ -318,29 +318,29 @@ const API_METHOD = 'POST';
       return payload;
     }
 
-    async function submitPayload(payload) {
-      const endpoint = document.getElementById('endpointUrl').value.trim();
-      const method = document.getElementById('httpMethod').value;
-
-      if (!payload.entidad.nombre_comercial) {
-        showStatus('error', 'El campo Nombre comercial es obligatorio.');
-        return;
-      }
-
-      if (!endpoint) {
-        showStatus('warn', 'No se configuró endpoint. El JSON ya quedó generado para prueba.');
-        return;
-      }
-
-      try {
-        showStatus('warn', 'Enviando información...');
-        const res = await fetch(endpoint, {
-          method,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
+        async function submitPayload(payload) {
+          const endpoint = document.getElementById('endpointUrl').value.trim();
+          const method = document.getElementById('httpMethod').value;
+        
+          if (!payload.entidad.nombre_comercial) {
+            showStatus('error', 'El campo Nombre comercial es obligatorio.');
+            return;
+          }
+        
+          if (!endpoint) {
+            showStatus('warn', 'No se configuró endpoint. El JSON ya quedó generado para prueba.');
+            return;
+          }
+        
+          try {
+            showStatus('warn', 'Enviando información...');
+            const res = await fetch(endpoint, {
+              method,
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            });
 
         const contentType = res.headers.get('content-type') || '';
         let responseData;
